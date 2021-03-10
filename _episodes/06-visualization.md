@@ -11,8 +11,11 @@ keypoints:
 - "Get an overview of nbviewer"
 ---
 
+As a first step towards making a visual comparison of the ACCESS-CM2 and ACCESS-ESM1-5 historical precipitation climatology, we are going to create a quick plot of the ACCESS-CM2 data.
 
-{: .language-python}
+accesscm2_pr_file = 'data/pr_Amon_ACCESS-CM2_historical_r1i1p1f1_gn_201001-201412.nc'
+
+```{python}
 
 We will need a number of the libraries introduced in the previous lesson.
 
@@ -20,7 +23,7 @@ import xarray as xr
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
 import numpy as np
-{: .language-python}
+```
 
 Since geographic data files can often be very large, when we first open our data file in xarray it simply loads the metadata associated with the file (this is known as "lazy loading"). We can then view summary information about the contents of the file before deciding whether we'd like to load some or all of the data into memory.
 
