@@ -1,8 +1,6 @@
 
 # Python for analyzing and visualizing spatio-temporal data
 
-[![DOI](https://zenodo.org/badge/96184802.svg)](https://zenodo.org/badge/latestdoi/96184802)
-
 These lessons will introduce you to Python for analyzing and visualizing spatio-temporal data. 
 We are using datasets from the environmental sciences that are freely available.
 
