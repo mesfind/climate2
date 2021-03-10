@@ -13,12 +13,14 @@ keypoints:
 
 As a first step towards making a visual comparison of the ACCESS-CM2 and ACCESS-ESM1-5 historical precipitation climatology, we are going to create a quick plot of the ACCESS-CM2 data.
 
-accesscm2_pr_file = 'data/pr_Amon_ACCESS-CM2_historical_r1i1p1f1_gn_201001-201412.nc'
-
 ```{python}
+accesscm2_pr_file = 'data/pr_Amon_ACCESS-CM2_historical_r1i1p1f1_gn_201001-201412.nc'
+```
+
 
 We will need a number of the libraries introduced in the previous lesson.
 
+```{python}
 import xarray as xr
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
@@ -27,10 +29,12 @@ import numpy as np
 
 Since geographic data files can often be very large, when we first open our data file in xarray it simply loads the metadata associated with the file (this is known as "lazy loading"). We can then view summary information about the contents of the file before deciding whether we'd like to load some or all of the data into memory.
 
-dset = xr.open_dataset(accesscm2_pr_file)
-print(dset)
-{: .language-python}
+```{python}
+df = xr.open_dataset(accesscm2_pr_file)
+print(df)
+```
 
+```
 <xarray.Dataset>
 Dimensions:    (bnds: 2, lat: 144, lon: 192, time: 60)
 Coordinates:
@@ -94,15 +98,17 @@ Attributes:
     CDO:                    Climate Data Operators version 1.9.8 (https://mpi...
     history:                Tue Jan 12 14:50:25 2021: ncatted -O -a history,p...
     NCO:                    netCDF Operators version 4.9.2 (Homepage = http:/...
-{: .output}
+```
+
 
 We can see that our dset object is an xarray.Dataset, which when printed shows all the metadata associated with our netCDF data file.
 
 In this case, we are interested in the precipitation variable contained within that xarray Dataset:
 
-print(dset['pr'])
-{: .language-python}
-
+```{python}
+print(df['pr'])
+```
+```
 <xarray.DataArray 'pr' (time: 60, lat: 144, lon: 192)>
 [1658880 values with dtype=float32]
 Coordinates:
@@ -116,16 +122,18 @@ Attributes:
     comment:        includes both liquid and solid phases
     cell_methods:   area: time: mean
     cell_measures:  area: areacella
-{: .output}
+```
 
 We can actually use either the dset['pr'] or dset.pr syntax to access the precipitation xarray.DataArray.
 
 To calculate the precipitation climatology, we can make use of the fact that xarray DataArrays have built in functionality for averaging over their dimensions.
 
-clim = dset['pr'].mean('time', keep_attrs=True)
+```{python}
+clim = df['pr'].mean('time', keep_attrs=True)
 print(clim)
-{: .language-python}
+```
 
+```
 <xarray.DataArray 'pr' (lat: 144, lon: 192)>
 array([[1.8461452e-06, 1.9054805e-06, 1.9228980e-06, ..., 1.9869783e-06,
         2.0026005e-06, 1.9683730e-06],
@@ -150,7 +158,7 @@ Attributes:
     comment:        includes both liquid and solid phases
     cell_methods:   area: time: mean
     cell_measures:  area: areacella
-{: output}
+```
 
 Now that we've calculated the climatology, we want to convert the units from kg m-2 s-1 to something that we are a little more familiar with like mm day-1.
 
@@ -158,20 +166,21 @@ To do this, consider that 1 kg of rain water spread over 1 m2 of surface is 1 mm
 
 The data associated with our xarray DataArray is simply a numpy array,
 
+```{python}
 type(clim.data)
-{: .language-python}
-
+```
+```
 numpy.ndarray
-{: .output}
+```
 
 so we can go ahead and multiply that array by 86400 and update the units attribute accordingly:
 
+```{python}
 clim.data = clim.data * 86400
 clim.attrs['units'] = 'mm/day' 
-
 print(clim)
-{: .language-python}
-
+```
+```
 <xarray.DataArray 'pr' (lat: 144, lon: 192)>
 array([[0.15950695, 0.16463352, 0.16613839, ..., 0.17167493, 0.17302468,
         0.17006743],
@@ -196,10 +205,11 @@ Attributes:
     comment:        includes both liquid and solid phases
     cell_methods:   area: time: mean
     cell_measures:  area: areacella
-{: .output}
+```
 
 We could now go ahead and plot our climatology using matplotlib, but it would take many lines of code to extract all the latitude and longitude information and to setup all the plot characteristics. Recognising this burden, the xarray developers have built on top of matplotlib.pyplot to make the visualisation of xarray DataArrays much easier.
 
+```{python}
 fig = plt.figure(figsize=[12,5])
 
 ax = fig.add_subplot(111, projection=ccrs.PlateCarree(central_longitude=180))
@@ -212,7 +222,7 @@ clim.plot.contourf(ax=ax,
 ax.coastlines()
 
 plt.show()
-{: .language-python}
+```
 
 # Save your animations in `mp4`
 
