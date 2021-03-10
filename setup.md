@@ -311,6 +311,8 @@ To obtain it, download and unzip the file:
 * [metos-python-data.tar](https://zenodo.org/record/995709/files/metos-python-data.tar)
 * [pr_Amon_ACCESS-CM2_historical_r1i1p1f1_gn_201001-201412.nc](https://carpentrieslab.github.io/python-aos-lesson/data/pr_Amon_ACCESS-CM2_historical_r1i1p1f1_gn_201001-201412.nc)
 * [pr_Amon_ACCESS-ESM1-5_historical_r1i1p1f1_gn_201001-201412.nc](https://carpentrieslab.github.io/python-aos-lesson/data/pr_Amon_ACCESS-ESM1-5_historical_r1i1p1f1_gn_201001-201412.nc)
+* [sftlf_fx_ACCESS-CM2_historical_r1i1p1f1_gn.nc](https://carpentrieslab.github.io/python-aos-lesson/data/sftlf_fx_ACCESS-CM2_historical_r1i1p1f1_gn.nc)
+* [sftlf_fx_ACCESS-ESM1-5_historical_r1i1p1f1_gn.nc](https://carpentrieslab.github.io/python-aos-lesson/data/sftlf_fx_ACCESS-ESM1-5_historical_r1i1p1f1_gn.nc)
 
 In order to follow the presented material, you should launch a Jupyter 
 notebook in the root directory (see [Starting Python](#Starting-Python)).
