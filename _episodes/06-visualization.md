@@ -224,6 +224,43 @@ ax.coastlines()
 plt.show()
 ```
 
+The default colorbar used by matplotlib is viridis. It used to be jet, but that was changed a couple of years ago in response to the #endtherainbow campaign.
+
+Putting all the code together (and reversing viridis so that wet is purple and dry is yellow)...
+
+```{python}
+import xarray as xr
+import cartopy.crs as ccrs
+import matplotlib.pyplot as plt
+import numpy as np
+
+accesscm2_pr_file = 'data/pr_Amon_ACCESS-CM2_historical_r1i1p1f1_gn_201001-201412.nc'
+
+dset = xr.open_dataset(accesscm2_pr_file)
+
+clim = dset['pr'].mean('time', keep_attrs=True)
+
+clim.data = clim.data * 86400
+clim.attrs['units'] = 'mm/day'
+
+fig = plt.figure(figsize=[12,5])
+ax = fig.add_subplot(111, projection=ccrs.PlateCarree(central_longitude=180))
+clim.plot.contourf(ax=ax,
+                   levels=np.arange(0, 13.5, 1.5),
+                   extend='max',
+                   transform=ccrs.PlateCarree(),
+                   cbar_kwargs={'label': clim.units},
+                   cmap='viridis_r')
+ax.coastlines()
+plt.show()
+```
+
+
+
+
+
+
+
 # Save your animations in `mp4`
 
 We are taking one of our first example where we plot the ECMWF ERA-Interim Vorticity over a pre-defined geographical area.
