@@ -41,13 +41,14 @@ And we append additional data to its unlimited dimension (time):
 from netCDF4 import Dataset 
 import numpy as np
 # Read and Append to an existing netCDF file
-d = Dataset('large.nc', 'a')
 
-data=d.variables['VO']
-t=d.variables['time']
+with Dataset('large.nc', 'a') as d:
+    df = d
+df=df.variables['VO']
+t=df.variables['time']
 
 last_time=t[t.size-1]
-VO=data[0,:,:,:]
+VO=df[0,:,:,:]
 
 appendvar = d.variables['VO']
 for nt in range(t.size,t.size+50):
@@ -56,7 +57,6 @@ for nt in range(t.size,t.size+50):
     last_time += 6.0
     appendvar[nt] = VO
     t[nt] = last_time
-d.close()
 </pre>
 
 As you can see writing this dataset is quite slow... but we will see later how we can improve the performance when writing netCDF file. We first look how 
@@ -69,12 +69,10 @@ into your laptop memory. You can slice netCDF variables using a syntax similar t
 
 <pre data-executable="true" data-language="python">%matplotlib inline
 from netCDF4 import Dataset    
-d = Dataset('large.nc', 'r')
-# Do not load dataset yet
-data=d.variables['VO']
-# pick-up a time and read VO
+ with Dataset('large.nc', 'r') as d:
+    data=d.variables['VO']
+ # pick-up a time and read VO
 slice_t=data[1000,:,:,:]
-d.close()
 </pre>
 
 > ## Timeseries
