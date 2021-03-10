@@ -44,11 +44,11 @@ import numpy as np
 
 with Dataset('large.nc', 'a') as d:
     df = d
-df=df.variables['VO']
-t=df.variables['time']
+dat = df.variables['VO']
+t = df.variables['time']
 
 last_time=t[t.size-1]
-VO=df[0,:,:,:]
+VO=dat[0,:,:,:]
 
 appendvar = d.variables['VO']
 for nt in range(t.size,t.size+50):
